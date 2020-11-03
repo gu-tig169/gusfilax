@@ -1,84 +1,118 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'hej'),
-    );
-  }
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: MyApp(),
+//   ));
+// }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+// class MyApp extends StatefulWidget {
+//   @override
+//   MyAppState createState() => new MyAppState();
+// }
 
-  final String title;
+// class MyAppState extends State<MyApp> {
+//   bool _isChecked = false;
 
-  @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
-  }
-}
+//   void onChanged(bool value) {
+//     setState(() {
+//       _isChecked = value;
+//     });
+//   }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 100;
+//   @override
+//   Widget build(BuildContext context) {
+//     return new Scaffold(
+//       appBar: AppBar(
+//         title: Text("ToDo"),
+//       ),
+//       body: Container(
+//         padding: EdgeInsets.all(32.0),
+//         child: Center(
+//           child: Column(
+//             children: [
+//               new CheckboxListTile(
+//                 title: Text("Click me"),
+//                 value: _isChecked,
+//                 activeColor: Colors.orange,
+//                 onChanged: (bool value) {
+//                   onChanged(value);
+//                 },
+//               ),
+//               new CheckboxListTile(
+//                 title: Text("Click you"),
+//                 value: _isChecked,
+//                 activeColor: Colors.orange,
+//                 onChanged: (bool value) {
+//                   onChanged(value);
+//                 },
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => AddTaskPage(),
+//             ),
+//           );
+//         },
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+// class AddTaskPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Add task")),
+//       body: Center(),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Axel FIlipsson', style: TextStyle(fontSize: 30)),
-            Text('counter',
-                style: TextStyle(
-                  fontSize: 100,
-                  fontWeight: FontWeight.w200,
-                  color: Colors.blue.withOpacity(0.8),
-                )),
-            Text(
-              '$_counter',
-              style: TextStyle(
-                fontSize: 200,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        child: Icon(Icons.remove),
-      ),
-      drawer: Drawer(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-          Text('Axel FIlipsson', style: TextStyle(fontSize: 20)),
-        ],
-      )),
-    );
-  }
-}
+// import 'package:flutter/material.dart';
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: ToDoPage(),
+//     );
+//   }
+// }
+
+// class ToDoPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Todo")),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => AddTaskPage(),
+//             ),
+//           );
+//         },
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
+
+// class AddTaskPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Add task")),
+//       body: Center(),
+//     );
+//   }
+// }
