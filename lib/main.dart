@@ -16,13 +16,17 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  final String value;
+
+  MyApp({Key key, this.value}) : super(key: key);
+
   @override
   MyAppState createState() => new MyAppState();
 }
 
 class MyAppState extends State<MyApp> {
   Map<String, bool> values = {
-    'Köpa sylt': false,
+    "Ringa polisen": false,
     'Ringa tandläkare': false,
     'Tvätta kläder': false,
   };
@@ -49,6 +53,9 @@ class MyAppState extends State<MyApp> {
         backgroundColor: Colors.deepOrange,
         title: Text("ToDo"),
       ),
+
+      // body: new Text("${widget.value}"),
+
       body: ListView(
         children: values.keys.map((String key) {
           return CheckboxListTile(
@@ -62,6 +69,7 @@ class MyAppState extends State<MyApp> {
           );
         }).toList(),
       ),
+
       //   children: [
       //     CheckboxListTile(
       //       title: Text(tasks),
@@ -82,7 +90,7 @@ class MyAppState extends State<MyApp> {
       //       title: Text(task.title),
       //       trailing: Icon(Icons.check_box_outline_blank),
       //     );
-      //   },
+      // },
       // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -115,7 +123,7 @@ class MyTextInput extends StatefulWidget {
 }
 
 class MyTextInputState extends State<MyTextInput> {
-  final TextEditingController controller = TextEditingController();
+  var _controller = TextEditingController();
 
   String result = "";
 
@@ -145,24 +153,37 @@ class MyTextInputState extends State<MyTextInput> {
                     setState(() {
                       result = str;
                     });
-                    controller.text = "";
+                    _controller.text = "";
                   },
-                  controller: controller),
+                  controller: _controller),
+
               ListTile(
                 title: Text(
                   result,
                 ),
-                trailing: Icon(
-                  _isChecked ? Icons.add : Icons.add_box,
-                  color: _isChecked ? Colors.red : null,
-                ),
+                trailing: RaisedButton(
+                    child: Icon(
+                      Icons.add,
+                    ),
+                    onPressed: () {
+                      var route = new MaterialPageRoute(
+                        builder: (BuildContext context) => MyApp(value: result),
+                      );
+                      Navigator.of(context).push(route);
+                    }),
+              ),
 
-                // onTap: () {
-                //   setState(() {
-                //     _isChecked = value;
-                //   });
-                // }
-              )
+              // railing: Icon(
+              //   _isChecked ? Icons.add : Icons.add_box,
+              //   color: _isChecked ? Colors.red : null,
+              // ),
+
+              // onTap: () {
+              //   setState(() {
+              //     _isChecked = value;
+              //   });
+              // }
+
               // Row(R
               //   children: [
               // Text(
