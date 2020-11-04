@@ -9,8 +9,6 @@ class Task {
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
-      // Define the default brightness and colors.
-
       accentColor: Colors.deepOrange,
     ),
     home: MyApp(),
@@ -201,13 +199,11 @@ class CheckboxWidget extends State {
 
   void toggleCheckbox(bool value) {
     if (isChecked == false) {
-      // Put your code here which you want to execute on CheckBox Checked event.
       setState(() {
         isChecked = true;
         checkedResult = 'Checkbox is CHECKED';
       });
     } else {
-      // Put your code here which you want to execute on CheckBox Un-Checked event.
       setState(() {
         isChecked = false;
         checkedResult = 'Checkbox is UN-CHECKED';
