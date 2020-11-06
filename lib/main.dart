@@ -1,90 +1,48 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:meta/meta.dart';
 
-class Terminal {
-  final String id;
+class Todo {
+  final String task;
 
-  Terminal({
-    this.id,
-  });
-}
-
-class Task {
-  final String title;
-
-  Task({this.title});
+  Todo(this.task);
 }
 
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(
-      accentColor: Colors.deepOrange,
-    ),
-    home: MyApp(),
+    home: ToDoApp(),
   ));
 }
 
-class MyApp extends StatefulWidget {
-  final String value;
-
-  MyApp({Key key, this.value}) : super(key: key);
-
+class ToDoApp extends StatefulWidget {
   @override
-  MyAppState createState() => new MyAppState();
+  ToDoAppState createState() => new ToDoAppState();
 }
 
-class MyAppState extends State<MyApp> {
-  var values = Expanded(flex: 1, child: MyTerminal());
-
+class ToDoAppState extends State<ToDoApp> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrange,
         title: Text("ToDo"),
+        actions: [
+          MyDropdownWidget(),
+        ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("Sort",
-                  style: TextStyle(fontSize: 25, color: Colors.white)),
-              decoration: BoxDecoration(
-                color: Colors.deepOrange,
-              ),
-            ),
-            ListTile(
-              title: Text("All"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("Completed"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("Uncompleted"),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(flex: 1, child: MyTerminal()),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text("task1"),
+            trailing: Icon(Icons.check_box_outline_blank),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => MyTextInput(),
-            ),
+            MaterialPageRoute(builder: (context) => ToDoInput()),
           );
         },
         child: Icon(Icons.add),
@@ -93,15 +51,52 @@ class MyAppState extends State<MyApp> {
   }
 }
 
-class MyTextInput extends StatefulWidget {
+class MyDropdownWidget extends StatefulWidget {
+  MyDropdownWidget({Key key}) : super(key: key);
+
   @override
-  MyTextInputState createState() => MyTextInputState();
+  _MyDropdownWidgetState createState() => _MyDropdownWidgetState();
 }
 
-class MyTextInputState extends State<MyTextInput> {
-  String textInput;
+class _MyDropdownWidgetState extends State<MyDropdownWidget> {
+  String dropdownValue = 'All';
 
-  String result = "";
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      iconSize: 24.0,
+      value: dropdownValue,
+      dropdownColor: Colors.white,
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>[
+        'All',
+        'Done',
+        'ToDo',
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15)),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class ToDoInput extends StatefulWidget {
+  @override
+  ToDoInputState createState() => ToDoInputState();
+}
+
+class ToDoInputState extends State<ToDoInput> {
+  String inputResult = "";
 
   @override
   Widget build(BuildContext context) {
@@ -112,109 +107,32 @@ class MyTextInputState extends State<MyTextInput> {
       ),
       body: Container(
         padding: EdgeInsets.all(30.0),
-        child: Center(
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Input text',
-                ),
-                onChanged: (val) {
-                  textInput = val;
-                },
-              ),
-              FlatButton(
-                padding: EdgeInsets.all(10.0),
-                textColor: Colors.white,
-                child: Text('Done', style: TextStyle(fontSize: 10.0)),
-                color: Colors.deepOrange,
-                onPressed: () {
-                  events.add(Terminal(
-                    id: textInput,
-                  ));
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MyTerminal extends StatefulWidget {
-  @override
-  _MyTerminalState createState() => _MyTerminalState();
-}
-
-StreamController<Terminal> events = StreamController<Terminal>();
-
-final myController = TextEditingController();
-
-class _MyTerminalState extends State<MyTerminal> {
-  final notifications = [
-    NotificationSetting(title: "Köp socker"),
-    NotificationSetting(title: "Tvätta golvet")
-  ];
-
-  final List<Terminal> terminalNodes = [];
-
-  initState() {
-    events.stream.listen((data) {
-      terminalNodes.add(data);
-      setState(() {});
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
         child: Column(
-          children: terminalNodes.map((node) {
-            return Column(
-              children: [
-                ...notifications.map(buildSingleCheckboxListTile).toList(),
-              ],
-            );
-          }).toList(),
+          children: [
+            TextField(
+              onChanged: (String str) {
+                inputResult = str;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Input ToDo',
+              ),
+            ),
+            SizedBox(height: 10),
+            ButtonTheme(
+                minWidth: 380.0,
+                height: 50.0,
+                buttonColor: Colors.deepOrange,
+                child: RaisedButton.icon(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    print(inputResult);
+                  },
+                  label: Text("Add Todo"),
+                )),
+          ],
         ),
       ),
     );
   }
-
-  Widget buildSingleCheckboxListTile(NotificationSetting notification) =>
-      buildCheckboxListTile(
-        notification: notification,
-        onClicked: () {
-          setState(() {
-            final newValue = !notification.value;
-            notification.value = newValue;
-          });
-        },
-      );
-
-  Widget buildCheckboxListTile({
-    @required NotificationSetting notification,
-    @required VoidCallback onClicked,
-  }) =>
-      ListTile(
-        onTap: onClicked,
-        leading: Checkbox(
-          value: notification.value,
-          onChanged: (value) => onClicked(),
-        ),
-        title: Text(notification.title),
-        trailing: Icon(Icons.delete),
-      );
-}
-
-class NotificationSetting {
-  String title;
-  bool value;
-
-  NotificationSetting({
-    @required this.title,
-    this.value = false,
-  });
 }
