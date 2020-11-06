@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:meta/meta.dart';
+
+class Terminal {
+  final String id;
+
+  Terminal({
+    this.id,
+  });
+}
 
 class Task {
   final String title;
@@ -25,26 +35,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  Map<String, bool> values = {
-    "Ringa polisen": false,
-    'Ringa tandläkare': false,
-    'Tvätta kläder': false,
-  };
-  // var _value = false;
-
-  // final tasks = [
-  //   Task(title: "Köpa tröja"),
-  //   Task(title: "Ringa tandläkare"),
-  //   Task(title: "Köpa sylt")
-  // ];
-
-  // bool _isChecked = false;
-
-  // void onChanged(bool value) {
-  //   setState(() {
-  //     _isChecked = value;
-  //   });
-  // }
+  var values = Expanded(flex: 1, child: MyTerminal());
 
   @override
   Widget build(BuildContext context) {
@@ -53,45 +44,40 @@ class MyAppState extends State<MyApp> {
         backgroundColor: Colors.deepOrange,
         title: Text("ToDo"),
       ),
-
-      // body: new Text("${widget.value}"),
-
-      body: ListView(
-        children: values.keys.map((String key) {
-          return CheckboxListTile(
-            title: Text(key),
-            value: values[key],
-            onChanged: (bool value) {
-              setState(() {
-                values[key] = value;
-              });
-            },
-          );
-        }).toList(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Sort",
+                  style: TextStyle(fontSize: 25, color: Colors.white)),
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
+              ),
+            ),
+            ListTile(
+              title: Text("All"),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text("Completed"),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text("Uncompleted"),
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
-
-      //   children: [
-      //     CheckboxListTile(
-      //       title: Text(tasks),
-      //       value: _value,
-      //       onChanged: (value) {
-      //         setState(() {
-      //           _value = value;
-      //         });
-      //       },
-      //     )
-      //   ],
-      // ),
-      // body: ListView.builder(
-      //   itemCount: tasks.length,
-      //   itemBuilder: (context, index) {
-      //     final task = tasks[index];
-      //     return ListTile(
-      //       title: Text(task.title),
-      //       trailing: Icon(Icons.check_box_outline_blank),
-      //     );
-      // },
-      // ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(flex: 1, child: MyTerminal()),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -107,39 +93,21 @@ class MyAppState extends State<MyApp> {
   }
 }
 
-// class AddTaskPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("Add task")),
-//       body: Center(),
-//     );
-//   }
-// }
-
 class MyTextInput extends StatefulWidget {
   @override
   MyTextInputState createState() => MyTextInputState();
 }
 
 class MyTextInputState extends State<MyTextInput> {
-  var _controller = TextEditingController();
+  String textInput;
 
   String result = "";
-
-  bool _isChecked = false;
-
-  void onChanged(bool value) {
-    setState(() {
-      _isChecked = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New task"),
+        title: Text("New Todo"),
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(
@@ -148,58 +116,24 @@ class MyTextInputState extends State<MyTextInput> {
           child: Column(
             children: [
               TextField(
-                  decoration: InputDecoration(hintText: "Type in here"),
-                  onSubmitted: (String str) {
-                    setState(() {
-                      result = str;
-                    });
-                    _controller.text = "";
-                  },
-                  controller: _controller),
-
-              ListTile(
-                title: Text(
-                  result,
+                decoration: InputDecoration(
+                  labelText: 'Input text',
                 ),
-                trailing: RaisedButton(
-                    child: Icon(
-                      Icons.add,
-                    ),
-                    onPressed: () {
-                      var route = new MaterialPageRoute(
-                        builder: (BuildContext context) => MyApp(value: result),
-                      );
-                      Navigator.of(context).push(route);
-                    }),
+                onChanged: (val) {
+                  textInput = val;
+                },
               ),
-
-              // railing: Icon(
-              //   _isChecked ? Icons.add : Icons.add_box,
-              //   color: _isChecked ? Colors.red : null,
-              // ),
-
-              // onTap: () {
-              //   setState(() {
-              //     _isChecked = value;
-              //   });
-              // }
-
-              // Row(R
-              //   children: [
-              // Text(
-              //   result,
-              //   style: TextStyle(fontWeight: FontWeight.bold),
-              // ),
-
-              // Checkbox(
-              //   value: _isChecked,
-              //   activeColor: Colors.orange,
-              //   onChanged: (bool value) {
-              //     onChanged(value);
-              //   },
-              // ),
-              //   ],
-              // ),
+              FlatButton(
+                padding: EdgeInsets.all(10.0),
+                textColor: Colors.white,
+                child: Text('Done', style: TextStyle(fontSize: 10.0)),
+                color: Colors.deepOrange,
+                onPressed: () {
+                  events.add(Terminal(
+                    id: textInput,
+                  ));
+                },
+              ),
             ],
           ),
         ),
@@ -208,50 +142,79 @@ class MyTextInputState extends State<MyTextInput> {
   }
 }
 
-class CustomCheckbox extends StatefulWidget {
+class MyTerminal extends StatefulWidget {
   @override
-  CheckboxWidget createState() => new CheckboxWidget();
+  _MyTerminalState createState() => _MyTerminalState();
 }
 
-class CheckboxWidget extends State {
-  bool isChecked = true;
+StreamController<Terminal> events = StreamController<Terminal>();
 
-  var checkedResult = 'Checkbox is CHECKED';
+final myController = TextEditingController();
 
-  void toggleCheckbox(bool value) {
-    if (isChecked == false) {
-      setState(() {
-        isChecked = true;
-        checkedResult = 'Checkbox is CHECKED';
-      });
-    } else {
-      setState(() {
-        isChecked = false;
-        checkedResult = 'Checkbox is UN-CHECKED';
-      });
-    }
+class _MyTerminalState extends State<MyTerminal> {
+  final notifications = [
+    NotificationSetting(title: "Köp socker"),
+    NotificationSetting(title: "Tvätta golvet")
+  ];
+
+  final List<Terminal> terminalNodes = [];
+
+  initState() {
+    events.stream.listen((data) {
+      terminalNodes.add(data);
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Transform.scale(
-        scale: 1.5,
-        child: Checkbox(
-          value: isChecked,
-          onChanged: (value) {
-            toggleCheckbox(value);
-          },
-          activeColor: Colors.green,
-          checkColor: Colors.white,
-          tristate: false,
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: terminalNodes.map((node) {
+            return Column(
+              children: [
+                ...notifications.map(buildSingleCheckboxListTile).toList(),
+              ],
+            );
+          }).toList(),
         ),
       ),
-      Text(
-        '$checkedResult',
-        style: TextStyle(fontSize: 21),
-        textAlign: TextAlign.center,
-      )
-    ]);
+    );
   }
+
+  Widget buildSingleCheckboxListTile(NotificationSetting notification) =>
+      buildCheckboxListTile(
+        notification: notification,
+        onClicked: () {
+          setState(() {
+            final newValue = !notification.value;
+            notification.value = newValue;
+          });
+        },
+      );
+
+  Widget buildCheckboxListTile({
+    @required NotificationSetting notification,
+    @required VoidCallback onClicked,
+  }) =>
+      ListTile(
+        onTap: onClicked,
+        leading: Checkbox(
+          value: notification.value,
+          onChanged: (value) => onClicked(),
+        ),
+        title: Text(notification.title),
+        trailing: Icon(Icons.delete),
+      );
+}
+
+class NotificationSetting {
+  String title;
+  bool value;
+
+  NotificationSetting({
+    @required this.title,
+    this.value = false,
+  });
 }
