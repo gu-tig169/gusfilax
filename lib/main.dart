@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-class Todo {
-  final String task;
-
-  Todo(this.task);
-}
-
 void main() {
   runApp(MaterialApp(
     home: ToDoApp(),
@@ -13,11 +7,18 @@ void main() {
 }
 
 class ToDoApp extends StatefulWidget {
+  String value;
+  ToDoApp({this.value});
+
   @override
-  ToDoAppState createState() => new ToDoAppState();
+  ToDoAppState createState() => new ToDoAppState(value);
 }
 
 class ToDoAppState extends State<ToDoApp> {
+  var checkBoxValue = false;
+
+  String value;
+  ToDoAppState(this.value);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -28,15 +29,43 @@ class ToDoAppState extends State<ToDoApp> {
           MyDropdownWidget(),
         ],
       ),
-      body: ListView(
+      body: Row(
         children: [
-          ListTile(
-            leading: Icon(Icons.delete),
-            title: Text("task1"),
-            trailing: Icon(Icons.check_box_outline_blank),
-          )
+          Checkbox(
+              value: checkBoxValue,
+              onChanged: (bool value) {
+                setState(() {
+                  checkBoxValue = value;
+                });
+              }),
+          Expanded(
+            child: value == null
+                ? Text("")
+                : Text(
+                    value,
+                  ),
+          ),
         ],
       ),
+
+      //  ListView(
+      //   children: [
+      //     // Row(gestured)
+
+      //     ListTile(
+      //       leading: Icon(Icons.delete),
+      //       title: value == null ? Text("") : Text(value),
+      //       onTap: () {
+      //         checkBox = false;
+      //       },
+      //       onLongPress: () {
+      //         checkBox = false;
+      //         print("hej");
+      //       },
+      //       trailing: checkBox == true ? Icon(Icons.add) : Icon(Icons.delete),
+      //     )
+      //   ],
+      // ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
         onPressed: () {
@@ -96,8 +125,8 @@ class ToDoInput extends StatefulWidget {
 }
 
 class ToDoInputState extends State<ToDoInput> {
-  String inputResult = "";
-
+  // List<String> values = ["köpa sylt", "köpa honung"];
+  String value;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +139,8 @@ class ToDoInputState extends State<ToDoInput> {
         child: Column(
           children: [
             TextField(
-              onChanged: (String str) {
-                inputResult = str;
+              onChanged: (text) {
+                value = text;
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -126,7 +155,12 @@ class ToDoInputState extends State<ToDoInput> {
                 child: RaisedButton.icon(
                   icon: Icon(Icons.add),
                   onPressed: () {
-                    print(inputResult);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ToDoApp(value: value),
+                      ),
+                    );
+                    print(value);
                   },
                   label: Text("Add Todo"),
                 )),
