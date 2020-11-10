@@ -16,6 +16,7 @@ class ToDoApp extends StatefulWidget {
 
 class ToDoAppState extends State<ToDoApp> {
   var checkBoxValue = false;
+  var checkBoxValue_2 = false;
 
   String value;
   ToDoAppState(this.value);
@@ -29,43 +30,7 @@ class ToDoAppState extends State<ToDoApp> {
           MyDropdownWidget(),
         ],
       ),
-      body: Row(
-        children: [
-          Checkbox(
-              value: checkBoxValue,
-              onChanged: (bool value) {
-                setState(() {
-                  checkBoxValue = value;
-                });
-              }),
-          Expanded(
-            child: value == null
-                ? Text("")
-                : Text(
-                    value,
-                  ),
-          ),
-        ],
-      ),
-
-      //  ListView(
-      //   children: [
-      //     // Row(gestured)
-
-      //     ListTile(
-      //       leading: Icon(Icons.delete),
-      //       title: value == null ? Text("") : Text(value),
-      //       onTap: () {
-      //         checkBox = false;
-      //       },
-      //       onLongPress: () {
-      //         checkBox = false;
-      //         print("hej");
-      //       },
-      //       trailing: checkBox == true ? Icon(Icons.add) : Icon(Icons.delete),
-      //     )
-      //   ],
-      // ),
+      body: _item(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
         onPressed: () {
@@ -76,6 +41,32 @@ class ToDoAppState extends State<ToDoApp> {
         },
         child: Icon(Icons.add),
       ),
+    );
+  }
+
+  Widget _item() {
+    return Row(
+      children: [
+        Checkbox(
+            value: checkBoxValue,
+            onChanged: (bool value) {
+              setState(() {
+                checkBoxValue = value;
+              });
+            }),
+        Expanded(
+          child: value == null
+              ? Text("")
+              : Text(
+                  value,
+                ),
+        ),
+        Expanded(
+            child: IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {},
+        )),
+      ],
     );
   }
 }
