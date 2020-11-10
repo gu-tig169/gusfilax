@@ -15,9 +15,6 @@ class ToDoApp extends StatefulWidget {
 }
 
 class ToDoAppState extends State<ToDoApp> {
-  var checkBoxValue = false;
-  var checkBoxValue_2 = false;
-
   String value;
   ToDoAppState(this.value);
   @override
@@ -30,11 +27,15 @@ class ToDoAppState extends State<ToDoApp> {
           MyDropdownWidget(),
         ],
       ),
-      body: _item(),
+      body: _toDoList(),
+      // _iconRow(true, value),
+
+      // _iconRow(true, value),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepOrange,
         onPressed: () {
           Navigator.push(
+            // async()
             context,
             MaterialPageRoute(builder: (context) => ToDoInput()),
           );
@@ -44,22 +45,26 @@ class ToDoAppState extends State<ToDoApp> {
     );
   }
 
-  Widget _item() {
+  Widget _toDoList() {
+    return ListView(
+      children: [
+        _iconRow(false, "Öva programmering"),
+        _iconRow(true, "Diska"),
+        _iconRow(true, "Köpa damsugarpåsar"),
+      ],
+    );
+  }
+
+  Widget _iconRow(checkBoxValue, text) {
     return Row(
       children: [
         Checkbox(
-            value: checkBoxValue,
-            onChanged: (bool value) {
-              setState(() {
-                checkBoxValue = value;
-              });
-            }),
+          value: checkBoxValue,
+          onChanged: (asdlk) {},
+        ),
         Expanded(
-          child: value == null
-              ? Text("")
-              : Text(
-                  value,
-                ),
+          child: Text(text),
+          // value == null ? Text("") : Text(text),
         ),
         Expanded(
             child: IconButton(
@@ -116,7 +121,6 @@ class ToDoInput extends StatefulWidget {
 }
 
 class ToDoInputState extends State<ToDoInput> {
-  // List<String> values = ["köpa sylt", "köpa honung"];
   String value;
   @override
   Widget build(BuildContext context) {
@@ -147,6 +151,7 @@ class ToDoInputState extends State<ToDoInput> {
                   icon: Icon(Icons.add),
                   onPressed: () {
                     Navigator.of(context).push(
+                      // value
                       MaterialPageRoute(
                         builder: (context) => ToDoApp(value: value),
                       ),
