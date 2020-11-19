@@ -15,7 +15,19 @@ class ToDoList extends StatelessWidget {
 
   Widget _toDoItem(context, item) {
     return ListTile(
-      leading: MyCheckbox(),
+      leading: Checkbox(
+        value: item.myCheck,
+        onChanged: (bool newVal) {
+          var state = Provider.of<MyState>(context, listen: false);
+          state.checkCheckbox(item);
+          if (item.myCheck == false) {
+            state.addToDoFilter(item);
+          } else if (item.myCheck == true) {
+            state.addDoneFilter(item);
+          }
+          // state.addToDoFilter(item);
+        },
+      ),
       title: Text(item.myText),
       trailing: IconButton(
         icon: Icon(Icons.delete),
@@ -28,25 +40,29 @@ class ToDoList extends StatelessWidget {
   }
 }
 
-class MyCheckbox extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyCheckboxState();
-  }
-}
+// class MyCheckbox extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return MyCheckboxState();
+//   }
+// }
 
-class MyCheckboxState extends State {
-  var checkboxValue = false;
+// class MyCheckboxState extends State {
+//   bool checkboxValue = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      value: checkboxValue,
-      onChanged: (newValue) {
-        setState(() {
-          checkboxValue = newValue;
-        });
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Checkbox(
+//       value: checkboxValue,
+//       onChanged: (newValue) {
+//         setState(() {
+//           checkboxValue = newValue;
+
+//           //  här!!!
+//           // var state = Provider.of<MyState>(context, listen: false);
+//           // state.checkCheckbox(item);
+//         });
+//       },
+//     );
+//   }
+// }

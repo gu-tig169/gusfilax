@@ -1,7 +1,8 @@
+import 'package:axel_app/DoneListView.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'ToDoList.dart';
-import 'model.dart';
+
+import 'RealToDoList.dart';
+import 'ToDoInput.dart';
 
 class MyDropdownWidget extends StatefulWidget {
   MyDropdownWidget({Key key}) : super(key: key);
@@ -23,12 +24,22 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
         setState(() {
           dropdownValue = newValue;
         });
-        if (dropdownValue == 'ToDo') {
-          print("ToDo");
-        } else if (dropdownValue == 'Done') {
-          print('Done');
-        } else {
-          print('All');
+        if (dropdownValue == "Done") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DoneListView(),
+            ),
+          );
+          dropdownValue = "All";
+        } else if (dropdownValue == "ToDo") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RealToDoListView(),
+            ),
+          );
+          dropdownValue = "All";
         }
       },
       items: <String>[
