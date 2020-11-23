@@ -38,6 +38,8 @@ class MyState extends ChangeNotifier {
 
   void removeItem(ToDo item) {
     _list.remove(item);
+    _doneList.remove(item);
+    _toDoList.remove(item);
 
     notifyListeners();
   }
