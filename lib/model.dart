@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'InternetTalker.dart';
-
-String setCheck(bool myCheck) {
-  // if(myCheck == false)
-  // if (myCheck == false) return 'false';
-  // if (myCheck == true) return 'true';
-  // return 'false';
-}
-
-// String boolToString(bool myCheck) {
-//   if (myCheck == false) return 'false';
-//   if (myCheck == true) return 'true';
-//   return 'false';
-// }
-
-// bool stringToBool(String done) {
-//   if (done == true) return true;
-//   if (done == false) return false;
-//   return false;
-// }
 
 class ToDo {
   String myText;
@@ -43,8 +23,8 @@ class ToDo {
   static Map<String, dynamic> toJson(ToDo item) {
     return {
       'title': item.myText,
-      // 'done': item.myCheck,
-      'done': setCheck(item.myCheck),
+      'done': item.myCheck,
+      // 'done': setDone(item.myCheck),
     };
   }
 
@@ -53,7 +33,7 @@ class ToDo {
       myText: json['title'],
       myId: json['id'],
       myCheck: json['done'],
-      // myCheck: stringToBool(json['done']),
+      // myCheck: setCheck(json['done']),
     );
   }
 }
@@ -93,12 +73,10 @@ class MyState extends ChangeNotifier {
     // var idx = list.indexOf(item);
     // list[idx].check();
     // notifyListeners();
-    // item.check();
+    // notifyListeners();
+    item.check();
 
-    await InternetTalker.updateToDo(
-      item.myId,
-      item,
-    );
+    await InternetTalker.updateToDo(item.myId, item);
     await getList();
   }
 
