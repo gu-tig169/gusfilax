@@ -25,7 +25,6 @@ class ToDoList extends StatelessWidget {
           } else if (item.myCheck == true) {
             state.addDoneFilter(item);
           }
-          // state.addToDoFilter(item);
         },
       ),
       title: Text(item.myText),
@@ -39,30 +38,3 @@ class ToDoList extends StatelessWidget {
     );
   }
 }
-
-// class MyCheckbox extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() {
-//     return MyCheckboxState();
-//   }
-// }
-
-// class MyCheckboxState extends State {
-//   bool checkboxValue = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Checkbox(
-//       value: checkboxValue,
-//       onChanged: (newValue) {
-//         setState(() {
-//           checkboxValue = newValue;
-
-//           //  här!!!
-//           // var state = Provider.of<MyState>(context, listen: false);
-//           // state.checkCheckbox(item);
-//         });
-//       },
-//     );
-//   }
-// }
