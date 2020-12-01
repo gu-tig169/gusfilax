@@ -7,7 +7,6 @@ import 'ToDoList.dart';
 import 'model.dart';
 
 class ToDoListView extends StatelessWidget {
-  // var hej = 1;
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
@@ -40,24 +39,10 @@ class ToDoListView extends StatelessWidget {
   }
 
   Widget myBody() {
-    // if (hej == 1) {
     return Container(
       child: Consumer<MyState>(
         builder: (context, state, child) => ToDoList(state.list),
       ),
     );
-    // } else if (hej == 2) {
-    //   return Container(
-    //     child: Consumer<MyState>(
-    //       builder: (context, state, child) => ToDoList(state.doneList),
-    //     ),
-    //   );
-    // } else {
-    //   return Container(
-    //     child: Consumer<MyState>(
-    //       builder: (context, state, child) => ToDoList(state.toDoList),
-    //     ),
-    //   );
-    // }
   }
 }
