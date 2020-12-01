@@ -1,6 +1,5 @@
 import 'package:axel_app/model.dart';
 import 'package:flutter/material.dart';
-import 'ToDoWidget.dart';
 
 class ToDoInput extends StatefulWidget {
   final ToDo item;
@@ -37,7 +36,7 @@ class ToDoInputState extends State<ToDoInput> {
         backgroundColor: Colors.deepOrange,
       ),
       body: Container(
-        padding: EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
             TextField(
@@ -49,19 +48,24 @@ class ToDoInputState extends State<ToDoInput> {
             ),
             SizedBox(height: 10),
             ButtonTheme(
-              minWidth: 380.0,
+              minWidth: 2000.0,
               height: 50.0,
               buttonColor: Colors.deepOrange,
               child: RaisedButton.icon(
-                icon: Icon(Icons.add),
+                icon: Icon(Icons.add, size: 28),
                 onPressed: () {
-                  Navigator.pop(
-                      context,
-                      ToDo(
-                        myText: myText,
-                      ));
+                  if (this.myText != "") {
+                    Navigator.pop(
+                        context,
+                        ToDo(
+                          myText: myText,
+                        ));
+                  }
                 },
-                label: Text("Add Todo"),
+                label: Text(
+                  "Add ",
+                  style: TextStyle(fontSize: 19.5),
+                ),
               ),
             ),
           ],

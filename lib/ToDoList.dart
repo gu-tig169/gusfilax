@@ -16,21 +16,18 @@ class ToDoList extends StatelessWidget {
   Widget _toDoItem(context, item) {
     return ListTile(
       leading: Checkbox(
+        activeColor: Colors.deepOrange,
         value: item.myCheck,
         onChanged: (bool newVal) {
           var state = Provider.of<MyState>(context, listen: false);
           state.checkCheckbox(item);
-          if (item.myCheck == false) {
-            state.addToDoFilter(item);
-          } else if (item.myCheck == true) {
-            state.addDoneFilter(item);
-          }
-          // state.addToDoFilter(item);
         },
       ),
-      title: Text(item.myText),
+      title: Text(item.myText,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.5)),
       trailing: IconButton(
-        icon: Icon(Icons.delete),
+        highlightColor: Colors.deepOrange,
+        icon: Icon(Icons.delete, size: 28),
         onPressed: () {
           var state = Provider.of<MyState>(context, listen: false);
           state.removeItem(item);
