@@ -32,7 +32,6 @@ class ToDoListView extends StatelessWidget {
             ),
           );
           Provider.of<MyState>(context, listen: false).addToDo(newToDo);
-          Provider.of<MyState>(context, listen: false).addToDoFilter(newToDo);
         },
       ),
     );

@@ -1,10 +1,7 @@
 import 'dart:convert';
-
-import 'package:axel_app/model.dart';
 import 'package:http/http.dart' as http;
 
-const API =
-    'https://todoapp-api-vldfm.ondigitalocean.app/todos?key=0716e1fa-636f-468b-8a39-aeaa58823aa2';
+import 'package:axel_app/model.dart';
 
 const API_KEY = "a1ca4012-0ea7-4405-8b1f-1e27633a319f";
 const API_URL = "https://todoapp-api-vldfm.ondigitalocean.app";

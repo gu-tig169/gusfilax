@@ -12,7 +12,8 @@ class DoneListView extends StatelessWidget {
         title: Text("Done"),
       ),
       body: Consumer<MyState>(
-        builder: (context, state, child) => ToDoList(state.doneList),
+        builder: (context, state, child) =>
+            ToDoList(state.list.where((item) => item.myCheck == true).toList()),
       ),
     );
   }
