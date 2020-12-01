@@ -12,7 +12,8 @@ class RealToDoListView extends StatelessWidget {
         title: Text("ToDo"),
       ),
       body: Consumer<MyState>(
-        builder: (context, state, child) => ToDoList(state.toDoList),
+        builder: (context, state, child) => ToDoList(
+            state.list.where((item) => item.myCheck == false).toList()),
       ),
     );
   }

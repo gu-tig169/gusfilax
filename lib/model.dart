@@ -24,7 +24,6 @@ class ToDo {
     return {
       'title': item.myText,
       'done': item.myCheck,
-      // 'done': setDone(item.myCheck),
     };
   }
 
@@ -33,7 +32,6 @@ class ToDo {
       myText: json['title'],
       myId: json['id'],
       myCheck: json['done'],
-      // myCheck: setCheck(json['done']),
     );
   }
 }
@@ -58,8 +56,6 @@ class MyState extends ChangeNotifier {
   }
 
   void addToDo(ToDo item) async {
-    // _list.add(item);
-    // List<ToDo> list = await InternetTalker.addToDo(item);
     await InternetTalker.addToDo(item);
     await getList();
   }
@@ -70,10 +66,6 @@ class MyState extends ChangeNotifier {
   }
 
   void checkCheckbox(ToDo item) async {
-    // var idx = list.indexOf(item);
-    // list[idx].check();
-    // notifyListeners();
-    // notifyListeners();
     item.check();
 
     await InternetTalker.updateToDo(item.myId, item);
@@ -86,7 +78,7 @@ class MyState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addDoneFilter(ToDo item) {
+  void addDoneFilter(ToDo item) async {
     _doneList.add(item);
     _toDoList.remove(item);
     notifyListeners();
