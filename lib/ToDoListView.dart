@@ -46,18 +46,5 @@ class ToDoListView extends StatelessWidget {
         builder: (context, state, child) => ToDoList(state.list),
       ),
     );
-    // } else if (hej == 2) {
-    //   return Container(
-    //     child: Consumer<MyState>(
-    //       builder: (context, state, child) => ToDoList(state.doneList),
-    //     ),
-    //   );
-    // } else {
-    //   return Container(
-    //     child: Consumer<MyState>(
-    //       builder: (context, state, child) => ToDoList(state.toDoList),
-    //     ),
-    //   );
-    // }
   }
 }

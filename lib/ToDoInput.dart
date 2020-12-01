@@ -40,9 +40,6 @@ class ToDoInputState extends State<ToDoInput> {
         padding: EdgeInsets.all(30.0),
         child: Column(
           children: [
-            ToDoWidget(ToDo(
-              myText: this.myText,
-            )),
             TextField(
               controller: textEditingController,
               decoration: InputDecoration(
