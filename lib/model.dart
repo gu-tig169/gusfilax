@@ -67,20 +67,7 @@ class MyState extends ChangeNotifier {
 
   void checkCheckbox(ToDo item) async {
     item.check();
-
     await InternetTalker.updateToDo(item.myId, item);
     await getList();
-  }
-
-  void addToDoFilter(ToDo item) {
-    _toDoList.add(item);
-    _doneList.remove(item);
-    notifyListeners();
-  }
-
-  void addDoneFilter(ToDo item) async {
-    _doneList.add(item);
-    _toDoList.remove(item);
-    notifyListeners();
   }
 }
