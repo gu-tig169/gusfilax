@@ -26,13 +26,14 @@ class ToDoListView extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ToDoInput(
                 ToDo(
-                  myText: '',
+                  myText: "",
                 ),
               ),
             ),
           );
-
-          Provider.of<MyState>(context, listen: false).addToDo(newToDo);
+          if (newToDo != null) {
+            Provider.of<MyState>(context, listen: false).addToDo(newToDo);
+          }
         },
       ),
     );

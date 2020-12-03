@@ -12,6 +12,8 @@ class ToDo {
     this.myId,
   });
 
+  void removeMyToDo() {}
+
   void check() {
     if (this.myCheck == false) {
       this.myCheck = true;

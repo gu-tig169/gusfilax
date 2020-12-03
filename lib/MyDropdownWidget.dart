@@ -16,6 +16,7 @@ class _MyDropdownWidgetState extends State<MyDropdownWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
+      elevation: 0,
       iconSize: 24.0,
       value: dropdownValue,
       dropdownColor: Colors.white,
